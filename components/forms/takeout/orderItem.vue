@@ -1,9 +1,13 @@
 <template>
-	<div class="row order-item">
-		<div class="col-md-2 order-padding">icon</div>
-		<div class="col-md-6 order-padding">Food Description</div>
-		<div class="col-md-2"><quantity></quantity></div>
-		<div class="col-md-2 order-padding">Alergies</div>
+	<div class="row order-item order-padding">
+		<div class="col-md-8 ">
+			<span class="font-weight-bold">{{ product.name }}</span
+			><br />
+			<div v-html="product.description"></div>
+		</div>
+
+		<div class="col-md-2"><quantity :variations="product"></quantity></div>
+		<div class="col-md-2 ">Alergies</div>
 	</div>
 </template>
 
@@ -14,6 +18,7 @@ export default {
 	components: {
 		quantity
 	},
+	props: ['product'],
 	data() {
 		return {};
 	}

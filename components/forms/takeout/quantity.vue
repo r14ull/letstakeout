@@ -1,37 +1,71 @@
 <template>
 	<div class="d-flex">
-		<span @click="add1 = true" class="icon icon-shape  shadow rounded-circle">
+		<span @click="varModal = true" class="icon icon-shape  shadow rounded-circle">
 			<i class="fal fa-minus-hexagon"></i>
 		</span>
-		<modal :show.sync="add1">
-			<h6 slot="header" class="modal-title" id="modal-title-default">Type your modal title</h6>
+		<modal :show.sync="varModal">
+			<template slot="header" class="modal-title">
+				<div class="flex-column">
+					<h4>{{ variations.name }}</h4>
+					<p v-html="variations.description"></p>
+				</div>
+			</template>
 
-			<p>
-				Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the
-				blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language
-				ocean.
-			</p>
-			<p>
-				A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
-				paradisematic country, in which roasted parts of sentences fly into your mouth.
-			</p>
+			<required
+				v-for="(variation, index) in variations.requiredProducts"
+				:key="Math.floor(Math.random() * 10000000) + 1"
+				:variation="variation"
+				@item="add"
+			>
+			</required>
+
+			<required
+				v-for="(variation, index) in variations.requiredAccessories"
+				:variation="variation"
+				acc="10"
+				:key="Math.floor(Math.random() * 10000000) + 1"
+				@item="add"
+			></required>
+
+			<varItems
+				v-for="(variation, index) in variations.optionalAccessories"
+				:variation="variation"
+				:key="index"
+				@update-item="extras"
+			></varItems>
 
 			<template slot="footer">
-				<base-button type="primary">Save changes</base-button>
-				<base-button type="link" class="ml-auto" @click="add1 = false">Close</base-button>
+				<base-button type="primary" @click="AddToOrder">Save changes</base-button>
+				<base-button type="link" class="ml-auto" @click="varModal = false">Close</base-button>
 			</template>
 		</modal>
 	</div>
 </template>
 
 <script>
+import required from './orderModal/required';
+import varItems from './variations';
 export default {
+	props: ['variations'],
+	components: {
+		varItems,
+		required
+	},
 	data() {
 		return {
-			add1: false
+			varModal: false,
+			orderItem: [],
+			item: null
 		};
 	},
 	methods: {
+		add(obj) {
+			this.orderItem.push(obj);
+		},
+		AddToOrder() {
+			this.$store.commit('order/addToOrder', this.orderItem);
+			varModal = false;
+		},
 		minus() {
 			alert(1);
 		}
@@ -40,6 +74,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.flex-column p {
+	margin: 0px;
+}
 .spaceing {
 	margin-right: 10px;
 }

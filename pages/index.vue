@@ -22,7 +22,7 @@
 			<div class="container">
 				<div class="row justify-content-center mt--300">
 					<div class="col-12">
-						<category></category>
+						<category v-for="(category, index) in categories" :category="category" :key="index"></category>
 					</div>
 				</div>
 			</div>
@@ -49,13 +49,43 @@
 </template>
 <script>
 import category from '../components/forms/takeout/category';
+import json from '../components/forms/takeout/json.json';
 export default {
 	name: 'Components',
 	components: {
 		category
 	},
 	data() {
-		return {};
+		return {
+			categories: [
+				{
+					name: 'starters',
+                    description: 'Quick category description abit about the resturarnt and its starters',
+                    products: json.products
+					//products: [
+					//	{
+					//		name: 'pizza',
+					//		cost: 10,
+					//		variations: [
+					//			{
+					//				name: 'cheese',
+					//				cost: 1
+					//			},
+					//			{
+					//				name: 'bacon',
+					//				cost: 1
+					//			},
+					//			{
+					//				name: 'olives',
+					//				cost: 1
+					//			}
+					//		]
+					//	}
+					//]
+				}
+			],
+			
+		};
 	}
 };
 </script>
