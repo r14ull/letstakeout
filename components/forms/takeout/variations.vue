@@ -14,7 +14,7 @@
 		</div>
 		<div v-if="count" class="d-flex justify-content-between my-3 bg-secondary">
 			<div>{{ count }}x</div>
-			<div>£{{ (variation.price * variation.quantity).toFixed(2) }}</div>
+			<div>£{{ (variation.price * count).toFixed(2) }}</div>
 		</div>
 	</div>
 </template>
@@ -22,15 +22,19 @@
 <script>
 export default {
 	props: ['variation'],
+	data() {
+		return {
+			count: 0
+		};
+	},
 	methods: {
 		add(evt) {
-			this.variation.quantity++;
-			this.$emit('update-item', this.variation);
+			this.count++;
 		},
 		minus() {
-			this.variation.quantity > 0 ? this.variation.quantity-- : null;
-			this.$emit('update-item', this.variation);
-		}
+			this.count > 0 ? this.count-- : null;
+        },
+
 	}
 };
 </script>
