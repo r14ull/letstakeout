@@ -5,7 +5,7 @@
 			<div>{{ item.name }}</div>
 		</div>
 
-		<div v-else v-for="(accessories, index) in variation.accessories" class="d-flex justify-content-between my-3">
+		<div v-else v-for="accessories in variation.accessories" class="d-flex justify-content-between my-3">
 			<div>{{ accessories.name }}</div>
 			<div>
 				<span>{{ accessories.formattedPrice }}</span>

@@ -11,30 +11,38 @@
 				</div>
 			</template>
 
+			<h5>Required Products</h5>
 			<required
 				v-for="(variation, index) in variations.requiredProducts"
-				:key="Math.floor(Math.random() * 10000000) + 1"
+				:key="index + 'reqProd'"
+				v-if="index <= reqProd"
 				:variation="variation"
-				@item="add"
+				@item="addReqProd"
 			>
 			</required>
 
+			<h5>Required Accessories</h5>
 			<required
 				v-for="(variation, index) in variations.requiredAccessories"
+				:key="index + 'reqAcc'"
+				v-if="index <= reqAcc"
 				:variation="variation"
-				acc="10"
-				:key="Math.floor(Math.random() * 10000000) + 1"
-				@item="add"
-			></required>
+				@item="addReqAcc"
+			>
+			</required>
 
+			<h4 v-if="variations.optionalAccessories.length">Optional Accessories</h4>
 			<varItems
 				v-for="(variation, index) in variations.optionalAccessories"
+				v-if="index > 0"
+				:key="index + 'optAcc'"
 				:variation="variation"
-				:key="index"
-				@update-item="extras"
-			></varItems>
+				@item="addOptAcc"
+			>
+			</varItems>
 
 			<template slot="footer">
+				<div>£ {{ itemTotal }}</div>
 				<base-button type="primary" @click="AddToOrder">Save changes</base-button>
 				<base-button type="link" class="ml-auto" @click="varModal = false">Close</base-button>
 			</template>
@@ -51,23 +59,78 @@ export default {
 		varItems,
 		required
 	},
+
 	data() {
 		return {
 			varModal: false,
-			orderItem: [],
-			item: null
+			item: {
+				name: this.variations.name,
+				description: this.variations.description,
+				base: this.variations.price,
+				requiredProduct: [],
+				requiredAccessory: [],
+				optionalAccessory: []
+			},
+			reqProd: 0,
+			reqAcc: 0
 		};
 	},
+	computed: {
+		itemTotal() {
+			return this.sumOrder();
+		}
+	},
 	methods: {
-		add(obj) {
-			this.orderItem.push(obj);
+		addOrUpdate(item, items) {
+			var foundIndex = items.findIndex(x => x.id == item.id);
+			if (foundIndex != -1) {
+				items[foundIndex] = item;
+			} else {
+				items.push(item);
+			}
+		},
+		sumOrder() {
+			var itemTotal = 0;
+			itemTotal = this.variations.price;
+
+			this.item.requiredProduct.forEach(item => {
+				itemTotal = itemTotal + item.price;
+			});
+
+			this.item.requiredAccessory.forEach(item => {
+				itemTotal = itemTotal + item.price;
+			});
+
+			this.item.optionalAccessory.forEach(item => {
+				var calcPrice = item.quantity * item.price;
+				itemTotal = itemTotal + calcPrice;
+			});
+
+			return itemTotal.toFixed(2);
+		},
+		addReqProd(obj) {
+			this.addOrUpdate(obj, this.item.requiredProduct);
+			this.reqProd++;
+		},
+		addReqAcc(obj) {
+			this.addOrUpdate(obj, this.item.requiredAccessory);
+			this.reqAcc++;
+		},
+		addOptAcc(obj) {
+			this.addOrUpdate(obj, this.item.optionalAccessory);
 		},
 		AddToOrder() {
-			this.$store.commit('order/addToOrder', this.orderItem);
-			varModal = false;
-		},
-		minus() {
-			alert(1);
+			this.item.itemTotal = this.itemTotal;
+			this.$store.commit('order/addToOrder', this.item);
+			this.item = {
+				name: this.variations.name,
+				description: this.variations.description,
+				base: this.variations.price,
+				requiredProduct: [],
+				requiredAccessory: [],
+				optionalAccessory: []
+			};
+			this.varModal = false;
 		}
 	}
 };
