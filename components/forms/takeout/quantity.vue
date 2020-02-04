@@ -1,7 +1,7 @@
 <template>
 	<div class="d-flex">
 		<span @click="varModal = true" class="icon icon-shape  shadow rounded-circle">
-			<i class="fal fa-minus-hexagon"></i>
+			<i class="fad fa-minus-hexagon"></i>
 		</span>
 		<modal :show.sync="varModal">
 			<template slot="header" class="modal-title">
@@ -13,7 +13,7 @@
 
 			<h5>Required Products</h5>
 			<required
-				v-for="(variation, index) in variations.requiredProducts"
+				v-for="(variation, index) in variations.required_products"
 				:key="index + 'reqProd'"
 				v-if="index <= reqProd"
 				:variation="variation"
@@ -23,7 +23,7 @@
 
 			<h5>Required Accessories</h5>
 			<required
-				v-for="(variation, index) in variations.requiredAccessories"
+				v-for="(variation, index) in variations.required_accessories"
 				:key="index + 'reqAcc'"
 				v-if="index <= reqAcc"
 				:variation="variation"
@@ -31,10 +31,9 @@
 			>
 			</required>
 
-			<h4 v-if="variations.optionalAccessories.length">Optional Accessories</h4>
+			<h4 v-if="variations.optional_accessories.length">Optional Accessories</h4>
 			<varItems
-				v-for="(variation, index) in variations.optionalAccessories"
-				v-if="index > 0"
+				v-for="(variation, index) in variations.optional_accessories"
 				:key="index + 'optAcc'"
 				:variation="variation"
 				@item="addOptAcc"

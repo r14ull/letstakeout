@@ -40,7 +40,11 @@ export default {
 	/*
 	 ** Plugins to load before mounting the App
 	 */
-	plugins: ['@/plugins/globalComponents.js', '@/plugins/mixinCommonMethods.js'],
+	plugins: [
+		'@/plugins/globalComponents.js',
+		'@/plugins/mixinCommonMethods.js',
+		{ src: '~/plugins/vuex-persist', ssr: false }
+	],
 	/*
 	 ** Nuxt.js dev-modules
 	 */

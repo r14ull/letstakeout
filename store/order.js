@@ -8,6 +8,10 @@ export const mutations = {
 	}
 };
 
-export const getters = {};
+export const getters = {
+	getOrders: state => {
+		return state.order;
+	}
+};
 
 export const actions = {};

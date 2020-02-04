@@ -60,31 +60,10 @@ export default {
 			categories: [
 				{
 					name: 'starters',
-                    description: 'Quick category description abit about the resturarnt and its starters',
-                    products: json.products
-					//products: [
-					//	{
-					//		name: 'pizza',
-					//		cost: 10,
-					//		variations: [
-					//			{
-					//				name: 'cheese',
-					//				cost: 1
-					//			},
-					//			{
-					//				name: 'bacon',
-					//				cost: 1
-					//			},
-					//			{
-					//				name: 'olives',
-					//				cost: 1
-					//			}
-					//		]
-					//	}
-					//]
+					description: 'Quick category description abit about the resturarnt and its starters',
+					products: json.data
 				}
-			],
-			
+			]
 		};
 	}
 };

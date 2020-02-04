@@ -5,10 +5,10 @@
 			<div>
 				<span>{{ variation.formattedPrice }}</span>
 				<span @click="minus" class="icon icon-sm icon-shape shadow rounded-circle">
-					<i class="fal fa-minus"></i>
+					<i class="fad fa-minus"></i>
 				</span>
 				<span @click="add" class="icon icon-sm icon-shape shadow rounded-circle">
-					<i class="fal fa-plus"></i>
+					<i class="fad fa-plus"></i>
 				</span>
 			</div>
 		</div>
