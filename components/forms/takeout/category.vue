@@ -1,11 +1,11 @@
 <template>
-	<card gradient="secondary" shadow body-classes="p-lg-5">
+	<card gradient="secondary" shadow body-classes="p-lg-5" class="mb-5">
 		<template v-slot:header>
 			<h1>{{ category.name }}</h1>
 		</template>
 
 		<template v-slot:default>
-			<orderItem v-for="(products, index) in category.products" :product="products" :key="index"></orderItem>
+			<orderItem v-for="(product, index) in category.products" :key="index" :product="product"></orderItem>
 		</template>
 
 		<template v-slot:footer>

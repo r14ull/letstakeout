@@ -18,11 +18,11 @@
 				</div>
 			</div>
 		</section>
-		<section class="section section-lg pt-lg-0 section-contact-us">
+		<section class="section section-lg pt-lg-0 section-contact-us mb-5">
 			<div class="container">
 				<div class="row justify-content-center mt--300">
 					<div class="col-12">
-						<category v-for="(category, index) in categories" :category="category" :key="index"></category>
+						<category v-for="cat in categories" :key="cat.id" :category="cat"></category>
 					</div>
 				</div>
 			</div>
@@ -49,7 +49,7 @@
 </template>
 <script>
 import category from '../components/forms/takeout/category';
-import json from '../components/forms/takeout/json.json';
+import json from '../components/forms/takeout/menu-1.json';
 export default {
 	name: 'Components',
 	components: {
@@ -57,13 +57,7 @@ export default {
 	},
 	data() {
 		return {
-			categories: [
-				{
-					name: 'starters',
-					description: 'Quick category description abit about the resturarnt and its starters',
-					products: json.data
-				}
-			]
+			categories: json
 		};
 	}
 };

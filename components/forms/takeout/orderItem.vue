@@ -1,5 +1,5 @@
 <template>
-	<div class="row order-item order-padding">
+	<div class="row order-item order-padding" v-if="product != null">
 		<div class="col-md-8 ">
 			<span class="font-weight-bold">{{ product.name }}</span
 			><br />
