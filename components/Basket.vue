@@ -1,27 +1,29 @@
 <template>
-	<BaseDropdown position="right" class="nav-item" menu-classes="dropdown-menu-xl">
-		<a slot="title" href="#" class=" " data-toggle="dropdown" role="button">
-			<span class="nav-link-inner--text"><i class="fad fa-shopping-basket fa-2x"></i></span>
-		</a>
-		<div class="dropdown-menu-inner">
-			<p v-for="(item, index) in order" :key="index">{{ item.name }}</p>
+	<div v-if="order.length">
+		<h4>Basket</h4>
+		<div v-for="(item, index) in order" :key="index" class="d-flex justify-content-between">
+			<p>{{ item.name }}</p>
+			<span style="vertical-align:middle" @click="remove(index)">
+				<i class="fad fa-trash"></i>
+			</span>
 		</div>
-	</BaseDropdown>
+	</div>
 </template>
 
 <script>
-import BaseDropdown from './BaseDropdown';
-
 export default {
-	components: {
-		BaseDropdown
-	},
+	components: {},
 	data() {
 		return {};
 	},
 	computed: {
 		order() {
 			return this.$store.state.order.order;
+		}
+	},
+	methods: {
+		remove(p) {
+			this.$store.commit('order/removeFromOrder', p);
 		}
 	}
 };

@@ -21,8 +21,22 @@
 		<section class="section section-lg pt-lg-0 section-contact-us mb-5">
 			<div class="container">
 				<div class="row justify-content-center mt--300">
-					<div class="col-12">
+					<div class="col-8">
 						<category v-for="cat in categories" :key="cat.id" :category="cat"></category>
+					</div>
+					<div class="col-4">
+						<card shadow body-classes="" class="mb-5 sticky-card">
+							<template v-slot:header>
+								<h4>Categories</h4>
+							</template>
+
+							<template v-slot:default>
+								<div v-for="cat in categories" :key="cat.id + 'menu'">
+									<a :href="'#' + cat.id">{{ cat.name }}</a>
+								</div>
+								<Basket />
+							</template>
+						</card>
 					</div>
 				</div>
 			</div>
@@ -48,11 +62,13 @@
 	</div>
 </template>
 <script>
+import Basket from '../components/Basket';
 import category from '../components/forms/takeout/category';
 import json from '../components/forms/takeout/menu-1.json';
 export default {
 	name: 'Components',
 	components: {
+		Basket,
 		category
 	},
 	data() {
@@ -62,3 +78,11 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+.sticky-card {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 2rem;
+}
+</style>

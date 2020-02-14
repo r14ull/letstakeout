@@ -1,6 +1,6 @@
 <template>
 	<div class="d-flex">
-		<span @click="varModal = true" class="icon icon-shape  shadow rounded-circle">
+		<span class="icon icon-shape  shadow rounded-circle" @click="varModal = true">
 			<i class="fad fa-minus-hexagon"></i>
 		</span>
 		<modal :show.sync="varModal">
@@ -11,23 +11,23 @@
 				</div>
 			</template>
 
-			<h5>Required Products</h5>
+			<h5 v-if="variations.required_accessories.length">Required Accessories</h5>
 			<required
-				v-for="(variation, index) in variations.required_products"
-				:key="index + 'reqProd'"
-				v-if="index <= reqProd"
+				v-for="(variation, index) in variations.required_accessories"
+				v-if="index <= reqAcc"
+				:key="index + 'reqAcc'"
 				:variation="variation"
-				@item="addReqProd"
+				@item="addReqAcc"
 			>
 			</required>
 
-			<h5>Required Accessories</h5>
+			<h5 v-if="variations.required_products.length">Required Products</h5>
 			<required
-				v-for="(variation, index) in variations.required_accessories"
-				:key="index + 'reqAcc'"
-				v-if="index <= reqAcc"
+				v-for="(variation, index) in variations.required_products"
+				v-if="index <= reqProd"
+				:key="index + 'reqProd'"
 				:variation="variation"
-				@item="addReqAcc"
+				@item="addReqProd"
 			>
 			</required>
 
@@ -53,11 +53,11 @@
 import required from './orderModal/required';
 import varItems from './variations';
 export default {
-	props: ['variations'],
 	components: {
 		varItems,
 		required
 	},
+	props: ['variations'],
 
 	data() {
 		return {
@@ -81,7 +81,7 @@ export default {
 	},
 	methods: {
 		addOrUpdate(item, items) {
-			var foundIndex = items.findIndex(x => x.id == item.id);
+			const foundIndex = items.findIndex(x => x.id == item.id);
 			if (foundIndex != -1) {
 				items[foundIndex] = item;
 			} else {
@@ -89,7 +89,7 @@ export default {
 			}
 		},
 		sumOrder() {
-			var itemTotal = 0;
+			let itemTotal = 0;
 			itemTotal = this.variations.price;
 
 			this.item.requiredProduct.forEach(item => {
@@ -101,7 +101,7 @@ export default {
 			});
 
 			this.item.optionalAccessory.forEach(item => {
-				var calcPrice = item.quantity * item.price;
+				const calcPrice = item.quantity * item.price;
 				itemTotal = itemTotal + calcPrice;
 			});
 

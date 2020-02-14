@@ -1,5 +1,5 @@
 <template>
-	<card gradient="secondary" shadow body-classes="p-lg-5" class="mb-5">
+	<card :id="category.id" gradient="secondary" shadow body-classes="p-lg-5" class="mb-5">
 		<template v-slot:header>
 			<h1>{{ category.name }}</h1>
 		</template>

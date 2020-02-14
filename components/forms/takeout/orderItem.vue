@@ -1,26 +1,39 @@
 <template>
-	<div class="row order-item order-padding" v-if="product != null">
-		<div class="col-md-8 ">
+	<div v-if="product != null" class="d-flex justify-content-between order-item order-padding">
+		<div>
 			<span class="font-weight-bold">{{ product.name }}</span
 			><br />
 			<div v-html="product.description"></div>
 		</div>
 
-		<div class="col-md-2"><quantity :variations="product"></quantity></div>
-		<div class="col-md-2 ">Alergies</div>
+		<div>
+			<quantity v-if="isSimpleProduct()" :variations="product"></quantity>
+			<simple v-else :product="product"></simple>
+		</div>
 	</div>
 </template>
 
 <script>
 import quantity from './quantity';
+import simple from './simple';
 export default {
-	name: 'orderitem',
+	name: 'Orderitem',
 	components: {
-		quantity
+		quantity,
+		simple
 	},
 	props: ['product'],
 	data() {
 		return {};
+	},
+	methods: {
+		isSimpleProduct() {
+			const simpleProduct =
+				this.product.optional_accessories.length +
+				this.product.required_products.length +
+				this.product.required_accessories.length;
+			return simpleProduct > 0;
+		}
 	}
 };
 </script>

@@ -29,16 +29,11 @@
 						<span class="nav-link-inner--text">Login</span>
 					</nuxt-link>
 				</li>
-
-				<li class="navbar-nav navbar-nav-hover align-items-lg-center">
-					<Basket />
-				</li>
 			</ul>
 		</BaseNav>
 	</header>
 </template>
 <script>
-import Basket from '../components/Basket';
 import BaseNav from '../components/BaseNav';
 import BaseDropdown from '../components/BaseDropdown';
 import CloseButton from '../components/CloseButton';
@@ -46,7 +41,6 @@ import CloseButton from '../components/CloseButton';
 export default {
 	components: {
 		BaseNav,
-		Basket,
 		CloseButton,
 		BaseDropdown
 	}
