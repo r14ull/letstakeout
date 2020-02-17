@@ -1,7 +1,10 @@
 <template>
 	<div>
 		<section class="section section-shaped my-0 overflow-hidden">
-			<div class="shape shape-style-3 bg-gradient-default shape-skew">
+			<div
+				class="shape shape-style-3 bg-gradient-default shape-skew bgimg"
+				:style="{ backgroundImage: 'url(' + detail.images.banner + ')!important' }"
+			>
 				<span></span>
 				<span></span>
 				<span></span>
@@ -10,9 +13,12 @@
 			<div class="container pt-lg pb-300">
 				<div class="row text-center justify-content-center">
 					<div class="col-lg-10">
-						<h2 class="display-3 text-white">Get Started</h2>
+						<h2 class="display-3 text-white">{{ detail.name }} - {{ detail.city }}</h2>
 						<p class="lead text-white">
-							Some quick example text on why they should sign up and what they should expect.
+							<span v-for="(food, index) in detail.cuisine" :key="food">
+								<span v-if="index > 0">/</span>
+								{{ food }}
+							</span>
 						</p>
 					</div>
 				</div>
@@ -27,34 +33,13 @@
 					<div class="col-4">
 						<card shadow body-classes="" class="mb-5 sticky-card">
 							<template v-slot:header>
-								<h4>Categories</h4>
+								<h4>Basket</h4>
 							</template>
 
 							<template v-slot:default>
-								<div v-for="cat in categories" :key="cat.id + 'menu'">
-									<a :href="'#' + cat.id">{{ cat.name }}</a>
-								</div>
 								<Basket />
 							</template>
 						</card>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section class="section section-lg">
-			<div class="container">
-				<div class="row row-grid justify-content-center">
-					<div class="col-lg-8 text-center">
-						<h2 class="display-3">
-							TAKE BACK YOUR TAKEOUT
-							<span class="text-success">Work on your time.</span>
-						</h2>
-						<p class="lead">
-							Sign Up to WORKAPP and work for a variaety of workplaces as and when you want to work.
-						</p>
-						<div class="btn-wrapper">
-							<nuxt-link to="/register" class="btn btn-primary mb-3 mb-sm-0">Get Started</nuxt-link>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -64,7 +49,6 @@
 <script>
 import Basket from '../components/Basket';
 import category from '../components/forms/takeout/category';
-import json from '../components/forms/takeout/menu-1.json';
 export default {
 	name: 'Components',
 	components: {
@@ -73,13 +57,57 @@ export default {
 	},
 	data() {
 		return {
-			categories: json
+			categories: this.$store.state.categories,
+			detail: this.$store.state.restaurant.detail,
+			error: null
 		};
+	},
+	fetch({ store, req }) {
+		function slugify(string) {
+			const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
+			const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------';
+			const p = new RegExp(a.split('').join('|'), 'g');
+
+			return string
+				.toString()
+				.toLowerCase()
+				.replace(/\s+/g, '-') // Replace spaces with -
+				.replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+				.replace(/&/g, '-and-') // Replace & with 'and'
+				.replace(/[^\w\-]+/g, '') // Remove all non-word characters
+				.replace(/\-\-+/g, '-') // Replace multiple - with single -
+				.replace(/^-+/, '') // Trim - from start of text
+				.replace(/-+$/, ''); // Trim - from end of text
+		}
+
+		const domain = slugify(req.headers.host);
+
+		store.$axios
+			.$get('http://letstakeout.test/storage/detail-' + domain + '.json')
+			.then(res => {
+				store.commit('restaurant/SET_DETAIL', res);
+			})
+			.catch(function() {
+				store.commit('restaurant/SET_ERROR', 'Detail File not found.');
+			});
+
+		return store.$axios
+			.$get('http://letstakeout.test/storage/menu-' + domain + '.json')
+			.then(res => {
+				store.commit('SET_MENU', res);
+			})
+			.catch(function() {
+				store.commit('SET_ERROR', 'Menu File not found.');
+			});
 	}
 };
 </script>
 
 <style lang="scss" scoped>
+.bgimg {
+	background-size: 100% !important;
+	background-repeat: no-repeat !important;
+}
 .sticky-card {
 	position: -webkit-sticky;
 	position: sticky;

@@ -1,11 +1,11 @@
 export const state = () => ({
-	categories: [],
+	detail: null,
 	error: null
 });
 
 export const mutations = {
-	SET_MENU(state, menu) {
-		state.categories = menu;
+	SET_DETAIL(state, detail) {
+		state.detail = detail;
 	},
 	SET_ERROR(state, error) {
 		state.error = error;
@@ -13,8 +13,8 @@ export const mutations = {
 };
 
 export const getters = {
-	MENU_GETTER: state => {
-		return state.categories;
+	DETAIL_GETTER: state => {
+		return state.detail;
 	}
 };
 

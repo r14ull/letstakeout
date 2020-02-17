@@ -5,14 +5,14 @@
 				<div class="col-md-6 mb-5 mb-md-0">
 					<div class="card card-lift--hover shadow border-0">
 						<nuxt-link class="shadow" to="/" title="Landing Page">
-							<img class="card-img" data-src="/images/bar.jpg" src="/images/bar.jpg" lazy="loaded" />
+							<img class="card-img" data-src="/images/rrrr.jpg" src="/images/rrrr.jpg" lazy="loaded" />
 						</nuxt-link>
 					</div>
 				</div>
 				<div class="col-md-6 mb-5 mb-lg-0">
 					<div class="card card-lift--hover shadow border-0">
 						<nuxt-link class="shadow" to="/" title="Profile Page">
-							<img class="card-img" data-src="/images/site.jpg" src="/images/site.jpg" lazy="loaded" />
+							<img class="card-img" data-src="/images/llll.jpg" src="/images/llll.jpg" lazy="loaded" />
 						</nuxt-link>
 					</div>
 				</div>
@@ -21,8 +21,8 @@
 		<div class="container">
 			<div class="row row-grid align-items-center my-md">
 				<div class="col-lg-6">
-					<h3 class="text-primary font-weight-light mb-2">Thank you for supporting us!</h3>
-					<h4 class="mb-0 font-weight-light text-light">Let's get in touch on any of these platforms.</h4>
+					<h3 class="text-primary font-weight-light mb-2">{{ detail.name }}</h3>
+					<h4 class="mb-0 font-weight-light text-light">{{ detail.street }} - {{ detail.city }}.</h4>
 				</div>
 				<div class="col-lg-6 text-lg-center btn-wrapper">
 					<a
@@ -71,44 +71,11 @@
 			<div class="row align-items-center justify-content-md-between">
 				<div class="col-md-6">
 					<div class="copyright">
-						© 2019
-						<a href="https://www.creative-tim.com" target="_blank" rel="noopener">Creative Tim</a>
-						&amp;
-						<a href="https://www.binarcode.com" target="_blank" rel="noopener">Binar Code</a>
+						© {{ year }}
+						<a href="https://letstakeout.com" target="_blank" rel="noopener">Lets take out</a>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<ul class="nav nav-footer justify-content-end">
-						<li class="nav-item">
-							<a href="https://www.creative-tim.com" target="_blank" rel="noopener" class="nav-link"
-								>Creative Tim</a
-							>
-						</li>
-						<li class="nav-item">
-							<a
-								href="https://www.creative-tim.com/presentation"
-								target="_blank"
-								rel="noopener"
-								class="nav-link"
-								>About Us</a
-							>
-						</li>
-						<li class="nav-item">
-							<a href="http://blog.creative-tim.com" target="_blank" rel="noopener" class="nav-link"
-								>Blog</a
-							>
-						</li>
-						<li class="nav-item">
-							<a
-								href="https://github.com/creativetimofficial/argon-design-system/blob/master/LICENSE.md"
-								target="_blank"
-								rel="noopener"
-								class="nav-link"
-								>MIT License</a
-							>
-						</li>
-					</ul>
-				</div>
+				<div class="col-md-6"></div>
 			</div>
 		</div>
 	</footer>
@@ -118,7 +85,8 @@ export default {
 	name: 'AppFooter',
 	data() {
 		return {
-			year: new Date().getFullYear()
+			year: new Date().getFullYear(),
+			detail: this.$store.state.restaurant.detail
 		};
 	}
 };

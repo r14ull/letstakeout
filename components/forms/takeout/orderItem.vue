@@ -1,9 +1,13 @@
 <template>
 	<div v-if="product != null" class="d-flex justify-content-between order-item order-padding">
-		<div>
+		<div class="mr-auto">
 			<span class="font-weight-bold">{{ product.name }}</span
 			><br />
 			<div v-html="product.description"></div>
+		</div>
+
+		<div class="base-order-price">
+			<span>£ {{ product.price.toFixed(2) }}</span>
 		</div>
 
 		<div>
@@ -41,5 +45,8 @@ export default {
 <style lang="scss" scoped>
 .order-padding {
 	padding: 12px;
+}
+.base-order-price {
+	width: 80px;
 }
 </style>

@@ -2,7 +2,10 @@
 	<header class="header-global">
 		<BaseNav class="navbar-main" transparent type effect="light" expand>
 			<nuxt-link slot="brand" class="navbar-brand mr-lg-5" to="/">
-				<span class="font-weight-bold">Lets take out</span>
+				<img
+					:src="this.$store.state.restaurant.detail.images.logo"
+					:alt="this.$store.state.restaurant.detail.name"
+				/>
 			</nuxt-link>
 
 			<div slot="content-header" slot-scope="{ closeMenu }" class="row">
@@ -22,12 +25,7 @@
 						<span class="nav-link-inner--text">{{ $auth.user.name }} - Logout</span>
 					</button>
 
-					<nuxt-link v-else to="/Login" class="btn btn-neutral btn-icon">
-						<span class="btn-inner--icon">
-							<i class="ni ni-circle-08"></i>
-						</span>
-						<span class="nav-link-inner--text">Login</span>
-					</nuxt-link>
+					<LoginModal v-else />
 				</li>
 			</ul>
 		</BaseNav>
@@ -35,15 +33,20 @@
 </template>
 <script>
 import BaseNav from '../components/BaseNav';
-import BaseDropdown from '../components/BaseDropdown';
+import LoginModal from '../components/LoginModal';
 import CloseButton from '../components/CloseButton';
 
 export default {
 	components: {
 		BaseNav,
 		CloseButton,
-		BaseDropdown
+		LoginModal
 	}
 };
 </script>
-<style></style>
+<style>
+.navbar-brand img {
+	height: 60px;
+	width: 60px;
+}
+</style>

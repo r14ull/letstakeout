@@ -70,7 +70,7 @@ export default {
 	 ** See https://axios.nuxtjs.org/options
 	 */
 	axios: {
-		baseURL: 'http://workapp-backend.test'
+		baseURL: 'http://letstakeout.test'
 	},
 	/*
 	 ** Build configuration

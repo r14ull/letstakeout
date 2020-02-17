@@ -1,29 +1,16 @@
 <template>
 	<div v-if="order.length">
-		<h4>Basket</h4>
-		<div v-for="(item, index) in order" :key="index" class="d-flex justify-content-between">
-			<p>{{ item.name }}</p>
-			<span style="vertical-align:middle" @click="remove(index)">
-				<i class="fad fa-trash"></i>
-			</span>
-		</div>
+		<BasketItem v-for="(item, index) in order" :key="index" :item="item"></BasketItem>
 	</div>
 </template>
 
 <script>
+import BasketItem from '../components/BasketItem';
 export default {
-	components: {},
-	data() {
-		return {};
-	},
+	components: { BasketItem },
 	computed: {
 		order() {
 			return this.$store.state.order.order;
-		}
-	},
-	methods: {
-		remove(p) {
-			this.$store.commit('order/removeFromOrder', p);
 		}
 	}
 };
